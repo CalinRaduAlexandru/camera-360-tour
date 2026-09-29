@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ro">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panorama 360° – cameră și hol</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<style>
+html,body,#panorama{height:100%;margin:0;background:#111}
+.pnlm-load-box,.pnlm-loader{display:none!important}
+</style>
+<link rel="stylesheet" href="brand-tour.css">
+
+<div id="panorama"></div>
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<script src="brand-tour.js"></script>
+<script>
+const preload = ['room_360_ai_filled.png', 'hol_360_equirectangular.jpg'].map(src => { const image = new Image(); image.src = src; return image; });
+const viewer = pannellum.viewer('panorama', {
+  default: {
+    firstScene: 'camera', autoLoad: true,
+    hfov: 110, minHfov: 110, maxHfov: 110,
+    compass: false, showZoomCtrl: false, mouseZoom: false, keyboardZoom: false
+  },
+  scenes: {
+    camera: {
+      title: 'Camera',
+      yaw: -45,
+      type: 'equirectangular',
+      panorama: 'room_360_ai_filled.png',
+      hotSpots: [{
+        pitch: -10, yaw: 0, type: 'custom', cssClass: 'duck-hotspot',
+        createTooltipFunc: window.makeDuckDoor,
+        createTooltipArgs: { scene: 'hol', label: 'Spre hol' }
+      }]
+    },
+    hol: {
+      title: 'Hol',
+      type: 'equirectangular',
+      panorama: 'hol_360_equirectangular.jpg',
+      hotSpots: [{
+        pitch: -10, yaw: -22, type: 'custom', cssClass: 'duck-hotspot',
+        createTooltipFunc: window.makeDuckDoor,
+        createTooltipArgs: { scene: 'camera', label: 'Spre cameră' }
+      }]
+    }
+  }
+});
+window.tourViewer = viewer;
+</script>
+<script type="importmap">
+{"imports":{"three":"./vendor/three.module.js"}}
+</script>
+<script type="module" src="./room-character.js"></script>
+
+</html>
