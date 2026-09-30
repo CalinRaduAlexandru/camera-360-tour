@@ -44,7 +44,13 @@ const saveTourView = () => {
 };
 window.addEventListener('pagehide', saveTourView);
 window.addEventListener('beforeunload', saveTourView);
-const arrivalYaw = { intrare: 0, curte: 0, receptie: 0, camera04: 0, subsol: 0, etaj1: 0, hol: 180, camera: 180 };
+const forwardYawIn = (destination, source, fallbackYaw) => {
+  const returnDoor = window.tourConfig?.scenes?.[destination]?.hotSpots?.find(
+    spot => spot.createTooltipArgs?.scene === source
+  );
+  if (!returnDoor) return fallbackYaw;
+  return ((returnDoor.yaw + 360) % 360) - 180;
+};
 window.travel = async function (destination, triggerEvent) {
   if (travelling) return;
   travelling = true;
@@ -97,7 +103,7 @@ window.travel = async function (destination, triggerEvent) {
       cleanup = () => { clearTimeout(timeout); viewer.off('load', done); viewer.off('error', fail); };
       viewer.on('load', done);
       viewer.on('error', fail);
-      viewer.loadScene(destination, 0, arrivalYaw[destination] ?? 180, 110);
+      viewer.loadScene(destination, 0, forwardYawIn(destination, source, sourceView.yaw), 110);
     });
     await Promise.all([loaded, delay(reduced ? 0 : 220)]);
     // Allow the destination to paint before revealing it.
