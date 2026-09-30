@@ -26,8 +26,8 @@ const savedTourView = (() => {
 })();
 const preload = [
   'intrare_360_street_logo_repaired.jpg',
-  'curte_360_complete_20260930.jpg',
-  'receptie_360_equirectangular.jpg',
+  'curte_360_harmonized.jpg',
+  'receptie_360_harmonized.jpg',
   'room_360_ai_filled.png',
   'hol_360_equirectangular.jpg'
 ].map(src => { const image = new Image(); image.src = src; return image; });
@@ -53,17 +53,17 @@ const tourConfig = {
       title: 'Curte',
       yaw: 0,
       type: 'equirectangular',
-      panorama: 'curte_360_complete_20260930.jpg',
+      panorama: 'curte_360_harmonized.jpg',
       hotSpots: [
         {
           pitch: -8, yaw: -35, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
-          createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
+          createTooltipArgs: { scene: 'intrare', label: 'Spre stradă' }
         },
         {
           pitch: -8, yaw: 158, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
-          createTooltipArgs: { scene: 'intrare', label: 'Spre stradă' }
+          createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
         }
       ]
     },
@@ -71,7 +71,7 @@ const tourConfig = {
       title: 'Recepție',
       yaw: 0,
       type: 'equirectangular',
-      panorama: 'receptie_360_equirectangular.jpg',
+      panorama: 'receptie_360_harmonized.jpg',
       hotSpots: [{
         pitch: -8, yaw: 0, type: 'custom', cssClass: 'duck-hotspot',
         createTooltipFunc: window.makeDuckDoor,
