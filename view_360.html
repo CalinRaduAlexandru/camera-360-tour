@@ -12,7 +12,7 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js?v=20260930-5"></script>
+<script src="brand-tour.js?v=20260930-6"></script>
 <script>
 const savedTourView = (() => {
   try {
@@ -28,7 +28,7 @@ const preload = [
   'intrare_360_street_logo_repaired.jpg',
   'curte_360_masa_corectata.png',
   'receptie_360_harmonized.jpg',
-  'camera_0_4_360.png',
+  'camera_0_4_360_v2.png',
   'subsol_360.png',
   'etaj1_360.png',
   'room_360_ai_filled.png',
@@ -56,15 +56,15 @@ const tourConfig = {
       title: 'Camera 0–4 ani',
       yaw: 0,
       type: 'equirectangular',
-      panorama: 'camera_0_4_360.png',
+      panorama: 'camera_0_4_360_v2.png',
       hotSpots: [
         {
-          pitch: -8, yaw: -130, type: 'custom', cssClass: 'duck-hotspot',
+          pitch: -8, yaw: -148, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
           createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
         },
         {
-          pitch: -8, yaw: 115, type: 'custom', cssClass: 'duck-hotspot',
+          pitch: -8, yaw: 104, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
           createTooltipArgs: { scene: 'etaj1', label: 'Spre etajul 1' }
         }
