@@ -2,7 +2,7 @@
 <html lang="ro">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panorama 360° – cameră și hol</title>
+<title>Tur 360° – camere și spații de joacă</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
 <style>
 html,body,#panorama{height:100%;margin:0;background:#111}
@@ -12,15 +12,15 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js?v=20260930-3"></script>
+<script src="brand-tour.js?v=20260930-4"></script>
 <script>
 const savedTourView = (() => {
   try {
     const saved = JSON.parse(localStorage.getItem('tour-last-view'));
-    if (saved && ['intrare', 'curte', 'receptie', 'camera04', 'camera', 'hol'].includes(saved.scene) &&
+    if (saved && ['intrare', 'curte', 'receptie', 'camera04', 'subsol', 'etaj1', 'camera', 'hol'].includes(saved.scene) &&
         Number.isFinite(saved.pitch) && Number.isFinite(saved.yaw)) return saved;
     const scene = localStorage.getItem('tour-last-scene');
-    if (['intrare', 'curte', 'receptie', 'camera04', 'camera', 'hol'].includes(scene)) return { scene };
+    if (['intrare', 'curte', 'receptie', 'camera04', 'subsol', 'etaj1', 'camera', 'hol'].includes(scene)) return { scene };
   } catch (_) {}
   return { scene: 'intrare' };
 })();
@@ -29,6 +29,8 @@ const preload = [
   'curte_360_masa_corectata.png',
   'receptie_360_harmonized.jpg',
   'camera_0_4_360.png',
+  'subsol_360.png',
+  'etaj1_360.png',
   'room_360_ai_filled.png',
   'hol_360_equirectangular.jpg'
 ].map(src => { const image = new Image(); image.src = src; return image; });
@@ -55,11 +57,18 @@ const tourConfig = {
       yaw: 0,
       type: 'equirectangular',
       panorama: 'camera_0_4_360.png',
-      hotSpots: [{
-        pitch: -8, yaw: -130, type: 'custom', cssClass: 'duck-hotspot',
-        createTooltipFunc: window.makeDuckDoor,
-        createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
-      }]
+      hotSpots: [
+        {
+          pitch: -8, yaw: -130, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
+        },
+        {
+          pitch: -8, yaw: 115, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'etaj1', label: 'Spre etajul 1' }
+        }
+      ]
     },
     curte: {
       title: 'Curte',
@@ -91,11 +100,38 @@ const tourConfig = {
           createTooltipArgs: { scene: 'curte', label: 'Spre curte' }
         },
         {
-          pitch: -8, yaw: 120, type: 'custom', cssClass: 'duck-hotspot',
+          pitch: -8, yaw: 108, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
           createTooltipArgs: { scene: 'camera04', label: 'Spre camera 0–4 ani' }
+        },
+        {
+          pitch: -8, yaw: 136, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'subsol', label: 'Spre subsol' }
         }
       ]
+    },
+    subsol: {
+      title: 'Subsol',
+      yaw: 0,
+      type: 'equirectangular',
+      panorama: 'subsol_360.png',
+      hotSpots: [{
+        pitch: -8, yaw: -160, type: 'custom', cssClass: 'duck-hotspot',
+        createTooltipFunc: window.makeDuckDoor,
+        createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
+      }]
+    },
+    etaj1: {
+      title: 'Etajul 1',
+      yaw: 0,
+      type: 'equirectangular',
+      panorama: 'etaj1_360.png',
+      hotSpots: [{
+        pitch: -10, yaw: -65, type: 'custom', cssClass: 'duck-hotspot',
+        createTooltipFunc: window.makeDuckDoor,
+        createTooltipArgs: { scene: 'camera04', label: 'Spre camera 0–4 ani' }
+      }]
     },
     camera: {
       title: 'Camera',

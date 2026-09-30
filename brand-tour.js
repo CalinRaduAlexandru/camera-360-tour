@@ -44,7 +44,7 @@ const saveTourView = () => {
 };
 window.addEventListener('pagehide', saveTourView);
 window.addEventListener('beforeunload', saveTourView);
-const arrivalYaw = { intrare: 0, curte: 0, receptie: 0, camera04: 0, hol: 180, camera: 180 };
+const arrivalYaw = { intrare: 0, curte: 0, receptie: 0, camera04: 0, subsol: 0, etaj1: 0, hol: 180, camera: 180 };
 window.travel = async function (destination, triggerEvent) {
   if (travelling) return;
   travelling = true;
@@ -58,6 +58,8 @@ window.travel = async function (destination, triggerEvent) {
     curte: 'Spre curte',
     receptie: 'Spre recepție',
     camera04: 'Spre camera 0–4 ani',
+    subsol: 'Spre subsol',
+    etaj1: 'Spre etajul 1',
     hol: 'Spre hol',
     camera: 'Spre cameră'
   };
@@ -66,6 +68,8 @@ window.travel = async function (destination, triggerEvent) {
     curte: 'Ai ajuns în curte.',
     receptie: 'Ai ajuns în recepție.',
     camera04: 'Ai ajuns în camera 0–4 ani.',
+    subsol: 'Ai ajuns la subsol.',
+    etaj1: 'Ai ajuns la etajul 1.',
     hol: 'Ai ajuns în hol.',
     camera: 'Ai ajuns în cameră.'
   };
