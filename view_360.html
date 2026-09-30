@@ -12,7 +12,7 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js?v=20260930-6"></script>
+<script src="brand-tour.js?v=20260930-7"></script>
 <script>
 const savedTourView = (() => {
   try {
@@ -28,7 +28,7 @@ const preload = [
   'intrare_360_street_logo_repaired.jpg',
   'curte_360_masa_corectata.png',
   'receptie_360_harmonized.jpg',
-  'camera_0_4_360_v2.png',
+  'camera_0_4_360_v3.png',
   'subsol_360.png',
   'etaj1_360.png',
   'room_360_ai_filled.png',
@@ -56,7 +56,7 @@ const tourConfig = {
       title: 'Camera 0–4 ani',
       yaw: 0,
       type: 'equirectangular',
-      panorama: 'camera_0_4_360_v2.png',
+      panorama: 'camera_0_4_360_v3.png',
       hotSpots: [
         {
           pitch: -8, yaw: -148, type: 'custom', cssClass: 'duck-hotspot',
@@ -64,9 +64,14 @@ const tourConfig = {
           createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
         },
         {
-          pitch: -8, yaw: 104, type: 'custom', cssClass: 'duck-hotspot',
+          pitch: -8, yaw: 110, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
           createTooltipArgs: { scene: 'etaj1', label: 'Spre etajul 1' }
+        },
+        {
+          pitch: -28, yaw: 134, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'subsol', label: 'Spre subsol' }
         }
       ]
     },
@@ -103,11 +108,6 @@ const tourConfig = {
           pitch: -8, yaw: 108, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
           createTooltipArgs: { scene: 'camera04', label: 'Spre camera 0–4 ani' }
-        },
-        {
-          pitch: -8, yaw: 136, type: 'custom', cssClass: 'duck-hotspot',
-          createTooltipFunc: window.makeDuckDoor,
-          createTooltipArgs: { scene: 'subsol', label: 'Spre subsol' }
         }
       ]
     },
@@ -119,7 +119,7 @@ const tourConfig = {
       hotSpots: [{
         pitch: -8, yaw: -160, type: 'custom', cssClass: 'duck-hotspot',
         createTooltipFunc: window.makeDuckDoor,
-        createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
+        createTooltipArgs: { scene: 'camera04', label: 'Spre camera 0–4 ani' }
       }]
     },
     etaj1: {
