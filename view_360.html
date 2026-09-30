@@ -12,18 +12,28 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js"></script>
+<script src="brand-tour.js?v=20260930-2"></script>
 <script>
+const savedTourView = (() => {
+  try {
+    const saved = JSON.parse(localStorage.getItem('tour-last-view'));
+    if (saved && ['intrare', 'curte', 'receptie', 'camera', 'hol'].includes(saved.scene) &&
+        Number.isFinite(saved.pitch) && Number.isFinite(saved.yaw)) return saved;
+    const scene = localStorage.getItem('tour-last-scene');
+    if (['intrare', 'curte', 'receptie', 'camera', 'hol'].includes(scene)) return { scene };
+  } catch (_) {}
+  return { scene: 'intrare' };
+})();
 const preload = [
   'intrare_360_street_logo_repaired.jpg',
-  'curte_360_equirectangular.jpg',
+  'curte_360_complete_20260930.jpg',
   'receptie_360_equirectangular.jpg',
   'room_360_ai_filled.png',
   'hol_360_equirectangular.jpg'
 ].map(src => { const image = new Image(); image.src = src; return image; });
-const viewer = pannellum.viewer('panorama', {
+const tourConfig = {
   default: {
-    firstScene: 'intrare', autoLoad: true,
+    firstScene: savedTourView.scene, autoLoad: true,
     hfov: 110, minHfov: 110, maxHfov: 110,
     compass: false, showZoomCtrl: false, mouseZoom: false, keyboardZoom: false
   },
@@ -43,15 +53,15 @@ const viewer = pannellum.viewer('panorama', {
       title: 'Curte',
       yaw: 0,
       type: 'equirectangular',
-      panorama: 'curte_360_equirectangular.jpg',
+      panorama: 'curte_360_complete_20260930.jpg',
       hotSpots: [
         {
-          pitch: -8, yaw: -16, type: 'custom', cssClass: 'duck-hotspot',
+          pitch: -8, yaw: -35, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
           createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
         },
         {
-          pitch: -8, yaw: 88, type: 'custom', cssClass: 'duck-hotspot',
+          pitch: -8, yaw: 158, type: 'custom', cssClass: 'duck-hotspot',
           createTooltipFunc: window.makeDuckDoor,
           createTooltipArgs: { scene: 'intrare', label: 'Spre stradă' }
         }
@@ -90,7 +100,12 @@ const viewer = pannellum.viewer('panorama', {
       }]
     }
   }
-});
+};
+if (Number.isFinite(savedTourView.pitch) && Number.isFinite(savedTourView.yaw)) {
+  tourConfig.scenes[savedTourView.scene].pitch = savedTourView.pitch;
+  tourConfig.scenes[savedTourView.scene].yaw = savedTourView.yaw;
+}
+const viewer = pannellum.viewer('panorama', tourConfig);
 window.tourViewer = viewer;
 </script>
 <script type="importmap">

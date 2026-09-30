@@ -30,6 +30,20 @@ announcement.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hi
 document.body.appendChild(announcement);
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 let travelling = false;
+const saveTourView = () => {
+  if (travelling || !window.tourViewer) return;
+  try {
+    const viewer = window.tourViewer;
+    const scene = viewer.getScene();
+    if (!scene) return;
+    localStorage.setItem('tour-last-view', JSON.stringify({
+      scene, pitch: viewer.getPitch(), yaw: viewer.getYaw()
+    }));
+    localStorage.setItem('tour-last-scene', scene);
+  } catch (_) {}
+};
+window.addEventListener('pagehide', saveTourView);
+window.addEventListener('beforeunload', saveTourView);
 const arrivalYaw = { intrare: 0, curte: 0, receptie: 0, hol: 180, camera: 180 };
 window.travel = async function (destination, triggerEvent) {
   if (travelling) return;
@@ -102,5 +116,6 @@ window.travel = async function (destination, triggerEvent) {
     panorama?.classList.remove('is-duck-travelling');
     travelling = false;
     document.querySelectorAll('.duck-door').forEach(button => button.disabled = false);
+    saveTourView();
   }
 };
