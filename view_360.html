@@ -30,7 +30,7 @@ const preload = [
   'receptie_360_harmonized.jpg',
   'camera_0_4_360_v4.png',
   'subsol_360.png',
-  'etaj1_360.png',
+  'etaj1_360_v2.png',
   'room_360_ai_filled.png',
   'hol_360_equirectangular.jpg'
 ].map(src => { const image = new Image(); image.src = src; return image; });
@@ -126,9 +126,9 @@ const tourConfig = {
       title: 'Etajul 1',
       yaw: 0,
       type: 'equirectangular',
-      panorama: 'etaj1_360.png',
+      panorama: 'etaj1_360_v2.png',
       hotSpots: [{
-        pitch: -10, yaw: -65, type: 'custom', cssClass: 'duck-hotspot',
+        pitch: -10, yaw: -40, type: 'custom', cssClass: 'duck-hotspot',
         createTooltipFunc: window.makeDuckDoor,
         createTooltipArgs: { scene: 'camera04', label: 'Spre camera 0–4 ani' }
       }]
