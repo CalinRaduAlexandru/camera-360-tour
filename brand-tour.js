@@ -30,6 +30,7 @@ announcement.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hi
 document.body.appendChild(announcement);
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 let travelling = false;
+const arrivalYaw = { intrare: 0, curte: 0, hol: 180, camera: 180 };
 window.travel = async function (destination, triggerEvent) {
   if (travelling) return;
   travelling = true;
@@ -38,7 +39,19 @@ window.travel = async function (destination, triggerEvent) {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const source = viewer.getScene();
   const sourceView = { pitch: viewer.getPitch(), yaw: viewer.getYaw() };
-  const label = destination === 'hol' ? 'Spre hol' : 'Spre cameră';
+  const labels = {
+    intrare: 'Spre intrare',
+    curte: 'Spre curte',
+    hol: 'Spre hol',
+    camera: 'Spre cameră'
+  };
+  const arrived = {
+    intrare: 'Ai ajuns la intrare.',
+    curte: 'Ai ajuns în curte.',
+    hol: 'Ai ajuns în hol.',
+    camera: 'Ai ajuns în cameră.'
+  };
+  const label = labels[destination] || 'Mergi mai departe';
   if (panorama && triggerEvent) {
     const rect = panorama.getBoundingClientRect();
     panorama.style.setProperty('--travel-x', `${triggerEvent.clientX - rect.left}px`);
@@ -62,14 +75,14 @@ window.travel = async function (destination, triggerEvent) {
       cleanup = () => { clearTimeout(timeout); viewer.off('load', done); viewer.off('error', fail); };
       viewer.on('load', done);
       viewer.on('error', fail);
-      viewer.loadScene(destination, 0, 180, 110);
+      viewer.loadScene(destination, 0, arrivalYaw[destination] ?? 180, 110);
     });
     await Promise.all([loaded, delay(reduced ? 0 : 220)]);
     // Allow the destination to paint before revealing it.
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     journey.classList.remove('is-active');
     journey.setAttribute('aria-hidden', 'true');
-    announcement.textContent = destination === 'hol' ? 'Ai ajuns în hol.' : 'Ai ajuns în cameră.';
+    announcement.textContent = arrived[destination] || 'Ai ajuns.';
     await delay(reduced ? 80 : 160);
   } catch (error) {
     cleanup?.();
