@@ -12,7 +12,7 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js?v=20260930-15"></script>
+<script src="brand-tour.js?v=20260930-16"></script>
 <script>
 const savedTourView = (() => {
   try {
@@ -45,7 +45,7 @@ const preload = [
 const tourConfig = {
   default: {
     firstScene: savedTourView.scene, autoLoad: true,
-    hfov: 130, minHfov: 90, maxHfov: 140,
+    hfov: 140, minHfov: 90, maxHfov: 140,
     compass: false, showZoomCtrl: true, mouseZoom: true, keyboardZoom: true
   },
   scenes: {

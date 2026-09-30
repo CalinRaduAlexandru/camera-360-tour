@@ -120,14 +120,13 @@ window.travel = async function (destination, triggerEvent) {
       viewer.on('load', done);
       viewer.on('error', fail);
       viewer.loadScene(destination, 0, forwardYawIn(destination, source, sourceView.yaw),
-        Math.min(sourceView.hfov, 118));
+        window.tourConfig.default.maxHfov);
     });
     await Promise.all([loaded, delay(reduced ? 0 : 220)]);
     // Allow the destination to paint before revealing it.
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     journey.classList.remove('is-active');
     journey.setAttribute('aria-hidden', 'true');
-    viewer.setHfov(sourceView.hfov, reduced ? false : 700);
     announcement.textContent = arrived[destination] || 'Ai ajuns.';
     await delay(reduced ? 80 : 160);
   } catch (error) {
