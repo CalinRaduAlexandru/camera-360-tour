@@ -69,6 +69,7 @@ window.travel = async function (destination, triggerEvent) {
     holEtaj1: 'Spre holul etajului 1',
     constructii: 'Spre camera de construcții',
     lego: 'Spre camera LEGO',
+    roluri: 'Spre camera de roluri',
     hol: 'Spre hol',
     camera: 'Spre cameră'
   };
@@ -82,6 +83,7 @@ window.travel = async function (destination, triggerEvent) {
     holEtaj1: 'Ai ajuns în holul etajului 1.',
     constructii: 'Ai ajuns în camera de construcții.',
     lego: 'Ai ajuns în camera LEGO.',
+    roluri: 'Ai ajuns în camera de roluri.',
     hol: 'Ai ajuns în hol.',
     camera: 'Ai ajuns în cameră.'
   };
