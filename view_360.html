@@ -12,22 +12,23 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js?v=20260930-2"></script>
+<script src="brand-tour.js?v=20260930-3"></script>
 <script>
 const savedTourView = (() => {
   try {
     const saved = JSON.parse(localStorage.getItem('tour-last-view'));
-    if (saved && ['intrare', 'curte', 'receptie', 'camera', 'hol'].includes(saved.scene) &&
+    if (saved && ['intrare', 'curte', 'receptie', 'camera04', 'camera', 'hol'].includes(saved.scene) &&
         Number.isFinite(saved.pitch) && Number.isFinite(saved.yaw)) return saved;
     const scene = localStorage.getItem('tour-last-scene');
-    if (['intrare', 'curte', 'receptie', 'camera', 'hol'].includes(scene)) return { scene };
+    if (['intrare', 'curte', 'receptie', 'camera04', 'camera', 'hol'].includes(scene)) return { scene };
   } catch (_) {}
   return { scene: 'intrare' };
 })();
 const preload = [
   'intrare_360_street_logo_repaired.jpg',
-  'curte_360_harmonized_v2.jpg',
+  'curte_360_masa_corectata.png',
   'receptie_360_harmonized.jpg',
+  'camera_0_4_360.png',
   'room_360_ai_filled.png',
   'hol_360_equirectangular.jpg'
 ].map(src => { const image = new Image(); image.src = src; return image; });
@@ -49,11 +50,22 @@ const tourConfig = {
         createTooltipArgs: { scene: 'curte', label: 'Spre curte' }
       }]
     },
+    camera04: {
+      title: 'Camera 0–4 ani',
+      yaw: 0,
+      type: 'equirectangular',
+      panorama: 'camera_0_4_360.png',
+      hotSpots: [{
+        pitch: -8, yaw: -130, type: 'custom', cssClass: 'duck-hotspot',
+        createTooltipFunc: window.makeDuckDoor,
+        createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
+      }]
+    },
     curte: {
       title: 'Curte',
       yaw: 0,
       type: 'equirectangular',
-      panorama: 'curte_360_harmonized_v2.jpg',
+      panorama: 'curte_360_masa_corectata.png',
       hotSpots: [
         {
           pitch: -8, yaw: -35, type: 'custom', cssClass: 'duck-hotspot',
@@ -72,11 +84,18 @@ const tourConfig = {
       yaw: 0,
       type: 'equirectangular',
       panorama: 'receptie_360_harmonized.jpg',
-      hotSpots: [{
-        pitch: -8, yaw: 0, type: 'custom', cssClass: 'duck-hotspot',
-        createTooltipFunc: window.makeDuckDoor,
-        createTooltipArgs: { scene: 'curte', label: 'Spre curte' }
-      }]
+      hotSpots: [
+        {
+          pitch: -8, yaw: 0, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'curte', label: 'Spre curte' }
+        },
+        {
+          pitch: -8, yaw: 120, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'camera04', label: 'Spre camera 0–4 ani' }
+        }
+      ]
     },
     camera: {
       title: 'Camera',
