@@ -58,7 +58,7 @@ window.travel = async function (destination, triggerEvent) {
   const panorama = document.getElementById('panorama');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const source = viewer.getScene();
-  const sourceView = { pitch: viewer.getPitch(), yaw: viewer.getYaw() };
+  const sourceView = { pitch: viewer.getPitch(), yaw: viewer.getYaw(), hfov: viewer.getHfov() };
   const labels = {
     intrare: 'Spre intrare',
     curte: 'Spre curte',
@@ -103,13 +103,15 @@ window.travel = async function (destination, triggerEvent) {
       cleanup = () => { clearTimeout(timeout); viewer.off('load', done); viewer.off('error', fail); };
       viewer.on('load', done);
       viewer.on('error', fail);
-      viewer.loadScene(destination, 0, forwardYawIn(destination, source, sourceView.yaw), 110);
+      viewer.loadScene(destination, 0, forwardYawIn(destination, source, sourceView.yaw),
+        Math.min(sourceView.hfov, 118));
     });
     await Promise.all([loaded, delay(reduced ? 0 : 220)]);
     // Allow the destination to paint before revealing it.
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     journey.classList.remove('is-active');
     journey.setAttribute('aria-hidden', 'true');
+    viewer.setHfov(sourceView.hfov, reduced ? false : 700);
     announcement.textContent = arrived[destination] || 'Ai ajuns.';
     await delay(reduced ? 80 : 160);
   } catch (error) {
@@ -120,7 +122,7 @@ window.travel = async function (destination, triggerEvent) {
     dismiss.hidden = false;
     dismiss.focus();
     await new Promise(resolve => dismiss.onclick = resolve);
-    viewer.loadScene(source, sourceView.pitch, sourceView.yaw, 110);
+    viewer.loadScene(source, sourceView.pitch, sourceView.yaw, sourceView.hfov);
     journey.classList.remove('is-active');
     journey.classList.remove('is-error');
     journey.setAttribute('aria-hidden', 'true');

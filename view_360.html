@@ -8,11 +8,11 @@
 html,body,#panorama{height:100%;margin:0;background:#111}
 .pnlm-load-box,.pnlm-loader{display:none!important}
 </style>
-<link rel="stylesheet" href="brand-tour.css">
+<link rel="stylesheet" href="brand-tour.css?v=20260930-8">
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js?v=20260930-7"></script>
+<script src="brand-tour.js?v=20260930-8"></script>
 <script>
 const savedTourView = (() => {
   try {
@@ -37,8 +37,8 @@ const preload = [
 const tourConfig = {
   default: {
     firstScene: savedTourView.scene, autoLoad: true,
-    hfov: 110, minHfov: 110, maxHfov: 110,
-    compass: false, showZoomCtrl: false, mouseZoom: false, keyboardZoom: false
+    hfov: 130, minHfov: 90, maxHfov: 140,
+    compass: false, showZoomCtrl: true, mouseZoom: true, keyboardZoom: true
   },
   scenes: {
     intrare: {
