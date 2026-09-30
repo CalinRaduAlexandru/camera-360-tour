@@ -12,15 +12,15 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 
 <div id="panorama"></div>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="brand-tour.js?v=20260930-11"></script>
+<script src="brand-tour.js?v=20260930-12"></script>
 <script>
 const savedTourView = (() => {
   try {
     const saved = JSON.parse(localStorage.getItem('tour-last-view'));
-    if (saved && ['intrare', 'curte', 'receptie', 'camera04', 'subsol', 'etaj1', 'holEtaj1', 'camera', 'hol'].includes(saved.scene) &&
+    if (saved && ['intrare', 'curte', 'receptie', 'camera04', 'subsol', 'etaj1', 'holEtaj1', 'constructii', 'lego', 'camera', 'hol'].includes(saved.scene) &&
         Number.isFinite(saved.pitch) && Number.isFinite(saved.yaw)) return saved;
     const scene = localStorage.getItem('tour-last-scene');
-    if (['intrare', 'curte', 'receptie', 'camera04', 'subsol', 'etaj1', 'holEtaj1', 'camera', 'hol'].includes(scene)) return { scene };
+    if (['intrare', 'curte', 'receptie', 'camera04', 'subsol', 'etaj1', 'holEtaj1', 'constructii', 'lego', 'camera', 'hol'].includes(scene)) return { scene };
   } catch (_) {}
   return { scene: 'intrare' };
 })();
@@ -32,6 +32,8 @@ const preload = [
   'subsol_360.png',
   'etaj1_360_v2.png',
   'hol_etaj1_360.png',
+  'camera_constructii_360.png',
+  'camera_lego_360.png',
   'room_360_ai_filled.png',
   'hol_360_equirectangular.jpg'
 ].map(src => { const image = new Image(); image.src = src; return image; });
@@ -146,10 +148,44 @@ const tourConfig = {
       yaw: 0,
       type: 'equirectangular',
       panorama: 'hol_etaj1_360.png',
+      hotSpots: [
+        {
+          pitch: -8, yaw: -109, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'etaj1', label: 'Spre scările etajului 1' }
+        },
+        {
+          pitch: -8, yaw: -64, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'lego', label: 'Spre camera LEGO' }
+        },
+        {
+          pitch: -8, yaw: 104, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'constructii', label: 'Spre camera de construcții' }
+        }
+      ]
+    },
+    constructii: {
+      title: 'Camera de construcții',
+      yaw: 0,
+      type: 'equirectangular',
+      panorama: 'camera_constructii_360.png',
       hotSpots: [{
-        pitch: -8, yaw: -109, type: 'custom', cssClass: 'duck-hotspot',
+        pitch: -8, yaw: -129, type: 'custom', cssClass: 'duck-hotspot',
         createTooltipFunc: window.makeDuckDoor,
-        createTooltipArgs: { scene: 'etaj1', label: 'Spre scările etajului 1' }
+        createTooltipArgs: { scene: 'holEtaj1', label: 'Spre holul etajului 1' }
+      }]
+    },
+    lego: {
+      title: 'Camera LEGO',
+      yaw: 0,
+      type: 'equirectangular',
+      panorama: 'camera_lego_360.png',
+      hotSpots: [{
+        pitch: -8, yaw: -68, type: 'custom', cssClass: 'duck-hotspot',
+        createTooltipFunc: window.makeDuckDoor,
+        createTooltipArgs: { scene: 'holEtaj1', label: 'Spre holul etajului 1' }
       }]
     },
     camera: {
