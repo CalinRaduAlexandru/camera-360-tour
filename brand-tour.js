@@ -30,7 +30,7 @@ announcement.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hi
 document.body.appendChild(announcement);
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 let travelling = false;
-const arrivalYaw = { intrare: 0, curte: 0, hol: 180, camera: 180 };
+const arrivalYaw = { intrare: 0, curte: 0, receptie: 0, hol: 180, camera: 180 };
 window.travel = async function (destination, triggerEvent) {
   if (travelling) return;
   travelling = true;
@@ -42,12 +42,14 @@ window.travel = async function (destination, triggerEvent) {
   const labels = {
     intrare: 'Spre intrare',
     curte: 'Spre curte',
+    receptie: 'Spre recepție',
     hol: 'Spre hol',
     camera: 'Spre cameră'
   };
   const arrived = {
     intrare: 'Ai ajuns la intrare.',
     curte: 'Ai ajuns în curte.',
+    receptie: 'Ai ajuns în recepție.',
     hol: 'Ai ajuns în hol.',
     camera: 'Ai ajuns în cameră.'
   };

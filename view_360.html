@@ -17,6 +17,7 @@ html,body,#panorama{height:100%;margin:0;background:#111}
 const preload = [
   'intrare_360_equirectangular.jpg',
   'curte_360_equirectangular.jpg',
+  'receptie_360_equirectangular.jpg',
   'room_360_ai_filled.png',
   'hol_360_equirectangular.jpg'
 ].map(src => { const image = new Image(); image.src = src; return image; });
@@ -43,10 +44,28 @@ const viewer = pannellum.viewer('panorama', {
       yaw: 0,
       type: 'equirectangular',
       panorama: 'curte_360_equirectangular.jpg',
+      hotSpots: [
+        {
+          pitch: -8, yaw: -16, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'intrare', label: 'Spre intrare' }
+        },
+        {
+          pitch: -8, yaw: 16, type: 'custom', cssClass: 'duck-hotspot',
+          createTooltipFunc: window.makeDuckDoor,
+          createTooltipArgs: { scene: 'receptie', label: 'Spre recepție' }
+        }
+      ]
+    },
+    receptie: {
+      title: 'Recepție',
+      yaw: 0,
+      type: 'equirectangular',
+      panorama: 'receptie_360_equirectangular.jpg',
       hotSpots: [{
         pitch: -8, yaw: 0, type: 'custom', cssClass: 'duck-hotspot',
         createTooltipFunc: window.makeDuckDoor,
-        createTooltipArgs: { scene: 'intrare', label: 'Spre intrare' }
+        createTooltipArgs: { scene: 'curte', label: 'Spre curte' }
       }]
     },
     camera: {
