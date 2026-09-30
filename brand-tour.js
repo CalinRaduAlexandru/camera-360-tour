@@ -66,6 +66,7 @@ window.travel = async function (destination, triggerEvent) {
     camera04: 'Spre camera 0–4 ani',
     subsol: 'Spre subsol',
     etaj1: 'Spre etajul 1',
+    holEtaj1: 'Spre holul etajului 1',
     hol: 'Spre hol',
     camera: 'Spre cameră'
   };
@@ -76,6 +77,7 @@ window.travel = async function (destination, triggerEvent) {
     camera04: 'Ai ajuns în camera 0–4 ani.',
     subsol: 'Ai ajuns la subsol.',
     etaj1: 'Ai ajuns la etajul 1.',
+    holEtaj1: 'Ai ajuns în holul etajului 1.',
     hol: 'Ai ajuns în hol.',
     camera: 'Ai ajuns în cameră.'
   };
